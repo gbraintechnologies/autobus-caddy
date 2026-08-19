@@ -10,7 +10,7 @@ GITHUB_ORG="${GITHUB_ORG:-frederickohe}"
 
 REPOS=(
   autobus
-  autobus-web
+  autobus-portal
   autobus-caddy
   autobus-rag
   qdrant
@@ -67,8 +67,12 @@ clone_repos() {
       log "Repo already cloned: $target"
       continue
     fi
+    org="$GITHUB_ORG"
+    if [ "$repo" = "autobus-portal" ]; then
+      org="gbraintechnologies"
+    fi
     log "Cloning $repo via HTTPS..."
-    git clone "https://github.com/${GITHUB_ORG}/${repo}.git" "$target"
+    git clone "https://github.com/${org}/${repo}.git" "$target"
   done
 }
 
@@ -81,9 +85,9 @@ prepare_env_files() {
     cp "$WWW_ROOT/chatwoot-docker-compose/.env.example" "$WWW_ROOT/chatwoot-docker-compose/.env"
     log "Created chatwoot .env from example — set SECRET_KEY_BASE and REDIS_PASSWORD"
   fi
-  if [ -f "$WWW_ROOT/autobus-web/.env.example" ] && [ ! -f "$WWW_ROOT/autobus-web/.env" ]; then
-    cp "$WWW_ROOT/autobus-web/.env.example" "$WWW_ROOT/autobus-web/.env"
-    log "Created autobus-web/.env from example"
+  if [ -f "$WWW_ROOT/autobus-portal/.env.example" ] && [ ! -f "$WWW_ROOT/autobus-portal/.env" ]; then
+    cp "$WWW_ROOT/autobus-portal/.env.example" "$WWW_ROOT/autobus-portal/.env"
+    log "Created autobus-portal/.env from example"
   fi
 }
 

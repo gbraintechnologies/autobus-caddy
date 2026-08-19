@@ -22,8 +22,8 @@ cd "$WWW_ROOT/chatwoot-docker-compose" && bash scripts/deploy.sh
 log "4/6 postiz"
 cd "$WWW_ROOT/postiz-docker-compose" && bash scripts/deploy.sh
 
-log "5/6 autobus-web"
-cd "$WWW_ROOT/autobus-web" && BUILD_NO_CACHE=true bash scripts/deploy.sh
+log "5/6 autobus-portal"
+cd "$WWW_ROOT/autobus-portal" && BUILD_NO_CACHE=true bash scripts/deploy.sh
 
 log "6/6 caddy (control station)"
 cd "$WWW_ROOT/autobus-caddy" && bash scripts/deploy.sh
