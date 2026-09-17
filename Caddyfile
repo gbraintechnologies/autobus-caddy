@@ -82,6 +82,19 @@ postiz.useautobus.com {
 	}
 }
 
+admin.useautobus.com {
+	reverse_proxy autobus_admin:80 {
+		header_up Host {host}
+		header_up X-Forwarded-Proto {scheme}
+		header_up X-Real-IP {remote}
+		header_up X-Forwarded-For {remote}
+	}
+
+	request_body {
+		max_size 50MB
+	}
+}
+
 rag.useautobus.com {
 	reverse_proxy greenbrain_rag_api:8088 {
 		header_up Host {host}
