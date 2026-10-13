@@ -120,6 +120,27 @@ rag.useautobus.com {
 	}
 }
 
+n8n.useautobus.com {
+	# The n8n REST API is only for autobus_backend over the internal `caddy` network.
+	handle /api/* {
+		respond "Not Found" 404
+	}
+
+	handle {
+		reverse_proxy n8n:5678 {
+			flush_interval -1
+			header_up Host {host}
+			header_up X-Forwarded-Proto {scheme}
+			header_up X-Real-IP {remote}
+			header_up X-Forwarded-For {remote}
+		}
+	}
+
+	request_body {
+		max_size 50MB
+	}
+}
+
 # Uncomment ONLY behind VPN / IP allowlist — never expose publicly for banking workloads.
 # portainer.useautobus.com {
 # 	@allowed remote_ip 10.0.0.0/8 192.168.0.0/16
