@@ -10,22 +10,16 @@ for net in caddy greenbrain_rag; do
   docker network inspect "$net" >/dev/null 2>&1 || docker network create "$net"
 done
 
-log "1/6 autobus backend"
+log "1/4 autobus backend"
 cd "$WWW_ROOT/autobus" && NEEDS_CADDY_NET=true NEEDS_RAG_NET=true bash scripts/deploy.sh
 
-log "2/6 autobus-rag (qdrant + embeddings + rag-api)"
+log "2/4 autobus-rag (qdrant + embeddings + rag-api)"
 cd "$WWW_ROOT/autobus-rag" && NEEDS_CADDY_NET=true NEEDS_RAG_NET=true bash scripts/deploy.sh
 
-log "3/6 chatwoot"
-cd "$WWW_ROOT/chatwoot-docker-compose" && bash scripts/deploy.sh
-
-log "4/6 postiz"
-cd "$WWW_ROOT/postiz-docker-compose" && bash scripts/deploy.sh
-
-log "5/6 autobus-portal"
+log "3/4 autobus-portal"
 cd "$WWW_ROOT/autobus-portal" && BUILD_NO_CACHE=true bash scripts/deploy.sh
 
-log "6/6 caddy (control station)"
+log "4/4 caddy (control station)"
 cd "$WWW_ROOT/autobus-caddy" && bash scripts/deploy.sh
 
 log "All stacks deployed."
