@@ -14,6 +14,7 @@ REPOS=(
   autobus-caddy
   autobus-rag
   qdrant
+  postiz-docker-compose
 )
 
 log() { echo "[bootstrap] $*"; }

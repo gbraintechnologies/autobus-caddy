@@ -113,6 +113,21 @@ n8n.useautobus.com {
 	}
 }
 
+# TikTok and Google send the Digital Marketing sign-in back here.
+# Postiz then stores the TikTok and YouTube account.
+postiz.useautobus.com {
+	reverse_proxy postiz:5000 {
+		header_up Host {host}
+		header_up X-Forwarded-Proto {scheme}
+		header_up X-Real-IP {remote}
+		header_up X-Forwarded-For {remote}
+	}
+
+	request_body {
+		max_size 50MB
+	}
+}
+
 # Uncomment ONLY behind VPN / IP allowlist — never expose publicly for banking workloads.
 # portainer.useautobus.com {
 # 	@allowed remote_ip 10.0.0.0/8 192.168.0.0/16
